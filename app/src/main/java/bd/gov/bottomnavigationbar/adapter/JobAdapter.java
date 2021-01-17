@@ -16,15 +16,17 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import bd.gov.bottomnavigationbar.JobActivity;
+import bd.gov.bottomnavigationbar.JobDetailsActivity;
 import bd.gov.bottomnavigationbar.R;
-import bd.gov.bottomnavigationbar.model.Datum;
+import bd.gov.bottomnavigationbar.jobModel.Datum;
 
-public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> {
+
+public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
 
     private Context context;
     private List<Datum> dataList;
 
-    public ApplyAdapter(Context context, List<Datum> dataList) {
+    public JobAdapter(Context context, List<Datum> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -33,7 +35,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_item_row,parent,false);
 
         return new ViewHolder(view);
     }
@@ -43,17 +45,15 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
 
         Datum data = dataList.get(position);
 
-        Glide.with(context)
-                .load("https://ezze.dev/applycafe/media/photos/job_application/"+data.getCompanyLogo())
-                .centerCrop()
-                .into(holder.imageView);
 
-        holder.textView.setText(data.getCompanyName());
+        holder.dateTV.setText(data.getLastDate());
+        holder.jobSubtitleTV.setText(data.getJobSubtitle());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, JobActivity.class);
+                Intent intent = new Intent(context, JobDetailsActivity.class);
                 intent.putExtra("id",data.getId());
                 context.startActivity(intent);
             }
@@ -67,12 +67,12 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView dateTV,jobSubtitleTV;
         ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.text);
-            imageView = itemView.findViewById(R.id.imageView);
+            dateTV = itemView.findViewById(R.id.dateTV);
+            jobSubtitleTV = itemView.findViewById(R.id.jobSubtitleTV);
         }
     }
 }

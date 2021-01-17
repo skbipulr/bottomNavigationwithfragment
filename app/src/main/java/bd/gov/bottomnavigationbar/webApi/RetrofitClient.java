@@ -15,11 +15,11 @@ public class RetrofitClient {
     private static Retrofit retrofit = null;
 
 
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "https://ezze.dev/applycafe/api/position/14";
 
     public static Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://ezze.dev/applycafe/api/companies/")
+                .baseUrl("https://ezze.dev/applycafe/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit;
