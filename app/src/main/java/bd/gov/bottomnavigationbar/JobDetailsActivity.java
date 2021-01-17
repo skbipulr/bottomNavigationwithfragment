@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import bd.gov.bottomnavigationbar.interfaces.ApiInterface;
@@ -19,6 +20,8 @@ public class JobDetailsActivity extends AppCompatActivity {
 
     private ApiInterface apiService;
     int id;
+    private TextView salaryTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,13 @@ public class JobDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<JobDetailsResponse> call, Response<JobDetailsResponse> response) {
                 if (response.code() == 200) {
 
+                    salaryTV = findViewById(R.id.salaryTV);
+
                     JobDetailsResponse res = response.body();
                     res.getAdditional();
                     Log.d("description",res.getData().getDescription());
+
+                    salaryTV.setText(res.getData().getSalary());
 
                     Toast.makeText(JobDetailsActivity.this, "" + res.getData().getSalary(), Toast.LENGTH_SHORT).show();
                 }
